@@ -52,6 +52,22 @@ when ODIN_OS == .Windows {
     }
 }
 
+when ODIN_OS == .Darwin {
+    when ODIN_ARCH == .amd64 || ODIN_ARCH == .arm64 {
+        foreign import lib "lz4_macos_universal.a"
+    } else {
+        #assert(fakse, "Sorry, unsupported os architecture")
+    }
+}
+
+when ODIN_OS == .Linux {
+    when ODIN_ARCH == .amd64 {
+        foreign import lib "lz4_linux_x64.a"
+    } else {
+        #assert(fakse, "Sorry, unsupported os architecture")
+    }
+}
+
 @(default_calling_convention = "c", link_prefix = "LZ4_")
 foreign lib {
     // library version number useful to check dll version requires v1.3.0+
